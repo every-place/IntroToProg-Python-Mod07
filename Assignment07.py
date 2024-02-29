@@ -4,6 +4,10 @@
 # with structured error handling
 # Change Log: (Who, When, What)
 #   ADean,24FEB24,Created Script
+#   ADean,25FEB24,Added/Modified functions
+#   ADean,26FEB24,Added/Modified functions and classes
+#   ADean,27FEB24,Added/Modified functions
+#   ADean,28FEB24,Added/Modified functions, classes, and inheritance, Finished Assignment
 #
 # ------------------------------------------------------------------------------------------ #
 import json
@@ -25,18 +29,8 @@ students: list = []  # a table of student data
 menu_choice: str  # Hold the choice made by the user.
 
 
-# TODO Create a Person Class
-# TODO Add first_name and last_name properties to the constructor (Done)
-# TODO Create a getter and setter for the first_name property (Done)
-# TODO Create a getter and setter for the last_name property (Done)
-# TODO Override the __str__() method to return Person data (Done)
 
-# TODO Create a Student class the inherits from the Person class (Done)
-# TODO call to the Person constructor and pass it the first_name and last_name data (Done)
-# TODO add a assignment to the course_name property using the course_name parameter (Done)
-# TODO add the getter for course_name (Done)
-# TODO add the setter for course_name (Done)
-# TODO Override the __str__() method to return the Student data (Done)
+
 
 
 
@@ -48,14 +42,13 @@ class FileProcessor:
     A collection of processing layer functions that work with Json files
 
     ChangeLog: (Who, When, What)
-    RRoot,1.1.2030,Created Class
+    ADean,25FEB24,Created Class
+    ADean,28FEB24,Completed Class
+
     """
     @staticmethod
     def read_data_from_file(file_name: str, student_data: list):
         """ This function reads data from a json file and loads it into a list of dictionary rows
-
-        ChangeLog: (Who, When, What)
-        RRoot,1.1.2030,Created function
 
         :param file_name: string data with name of file to read from
         :param student_data: list of dictionary rows to be filled with file data
@@ -79,9 +72,6 @@ class FileProcessor:
     def write_data_to_file(file_name: str, student_data: list):
         """ This function writes data to a json file with data from a list of dictionary rows
 
-        ChangeLog: (Who, When, What)
-        RRoot,1.1.2030,Created function
-
         :param file_name: string data with name of file to write to
         :param student_data: list of dictionary rows to be writen to the file
 
@@ -103,23 +93,133 @@ class FileProcessor:
 
 
 # Presentation --------------------------------------- #
+# TODO Create a Person Class
 class Person:
     '''
     A collection of presentation layer functions that define and manage and individual Person
 
     ChangeLog: (Who, When, What)
-    ADean,24FEB24,Created Class
+    ADean,26FEB24,Created Class
+    ADean,28FEB24,Completed Class
 
     '''
+
+    # TODO Add first_name and last_name properties to the constructor
+    def __init__(self, first_name: str = '', last_name: str = ''):
+        ''' Constructor to set initial values for first and last name
+
+        :param first_name: string, person's first name
+        :param last_name: string, person's last name
+        '''
+        self.first_name = first_name
+        self.last_name = last_name
+
+    # TODO Create a getter and setter for the first_name property (Done)
+    @property
+    def first_name(self):
+        ''' This property ensures that the first name will be capitalized
+
+        :return: Capitalized first name
+        '''
+        return self.__first_name.title() # Capitalize first_name
+
+    @first_name.setter
+    def first_name(self, value: str):
+        ''' This setter ensures that the first name has no numbers and is not blank
+
+        :param value:
+        :return:
+        '''
+        if value.isalpha or value != '':
+            self.__first_name = value
+        else:
+            raise ValueError('The first name cannot contain numbers or be blank.')
+
+    # TODO Create a getter and setter for the last_name property (Done)
+    @property
+    def last_name(self):
+        ''' This property ensures that the first name will be capitalized
+
+               :return: Capitalized last name
+               '''
+        return self.__last_name.title()  # Capitalize first_name
+
+    @last_name.setter
+    def last_name(self, value: str):
+        ''' This setter ensures that the last name has no numbers and is not blank
+
+                :param value: person last name
+                :return:
+                '''
+        if value.isalpha or value != '':
+            self.__last_name = value
+        else:
+            raise ValueError('The last name cannot contain numbers or be blank.')
+
+    # TODO Override the __str__() method to return Person data (Done)
+    def __str__(self):
+        ''' This function defines the return value of the person object, without the reference information
+
+        :return: string, first name, last name
+        '''
+        return f'{self.first_name},{self.last_name}'
+
+# TODO Create a Student class the inherits from the Person class (Done)
+class Student(Person):
+    '''
+    This class inherits the attributes of the Person class and adds the course-name to define the Student
+
+    ChangeLog: (Who, When, What)
+    ADean,28FEB24,Created Class
+    ADean,28FEB24,Completed Class
+
+    '''
+
+    # TODO add a assignment to the course_name property using the course_name parameter (Done)
+    def __init__(self, first_name: str = '', last_name: str ='', course_name: str = ''):
+
+        super().__init__(first_name = first_name,last_name=last_name)
+
+        self.course_name = course_name
+
+    # TODO add the getter for course_name (Done
+    @property
+    def course_name(self):
+        ''' This property returns the course_name
+
+        :return: string, course_name
+        '''
+        return self.__course_name
+
+    # TODO add the setter for course_name (Done)
+    @course_name.setter
+    def course_name(self, value: str):
+        ''' This setter ensures that the class name is not blank.
+
+        :param value:
+        :return:
+        '''
+
+        if course_name != '':
+            self.__course_name = str(value)
+        else:
+            raise ValueError("Course Name cannot be blank.")
+
+    # TODO Override the __str__() method to return the Student data (Done)
+    def __str__(self):
+        ''' This property returns the student data
+
+               :return: string, student data
+               '''
+        return f'{self.first_name},{self.last_name},{self.course_name}'
 class IO:
     """
     A collection of presentation layer functions that manage user input and output
 
     ChangeLog: (Who, When, What)
-    RRoot,1.1.2030,Created Class
-    RRoot,1.2.2030,Added menu output and input functions
-    RRoot,1.3.2030,Added a function to display the data
-    RRoot,1.4.2030,Added a function to display custom error messages
+    ADean,26FEB24,Created Class
+    ADean,28FEB24,Completed Class
+
     """
 
     @staticmethod
@@ -127,9 +227,10 @@ class IO:
         """ This function displays the a custom error messages to the user
 
         ChangeLog: (Who, When, What)
-        RRoot,1.3.2030,Created function
+        ADean,26FEB24,Created function
 
         :param message: string with message data to display
+
         :param error: Exception object with technical message to display
 
         :return: None
@@ -144,10 +245,9 @@ class IO:
         """ This function displays the menu of choices to the user
 
         ChangeLog: (Who, When, What)
-        RRoot,1.1.2030,Created function
+        ADean,26FEB24,Created function
 
-
-        :return: None
+        :return:  Choice Menu string
         """
         print()  # Adding extra space to make it look nicer.
         print(menu)
@@ -158,7 +258,7 @@ class IO:
         """ This function gets a menu choice from the user
 
         ChangeLog: (Who, When, What)
-        RRoot,1.1.2030,Created function
+        ADean,26FEB24,Created function
 
         :return: string with the users choice
         """
@@ -177,7 +277,7 @@ class IO:
         """ This function displays the student and course names to the user
 
         ChangeLog: (Who, When, What)
-        RRoot,1.1.2030,Created function
+        ADean,26FEB24,Created function
 
         :param student_data: list of dictionary rows to be displayed
 
@@ -195,7 +295,8 @@ class IO:
         """ This function gets the student's first name and last name, with a course name from the user
 
         ChangeLog: (Who, When, What)
-        RRoot,1.1.2030,Created function
+        ADean,25Feb24,Created function
+        ADean,28Feb24,Added Finished function
 
         :param student_data: list of dictionary rows to be filled with input data
 
@@ -204,18 +305,19 @@ class IO:
 
         try:
             student_first_name = input("Enter the student's first name: ")
-            if not student_first_name.isalpha():
-                raise ValueError("The last name should not contain numbers.")
             student_last_name = input("Enter the student's last name: ")
-            if not student_last_name.isalpha():
-                raise ValueError("The last name should not contain numbers.")
+            # TODO call to the Person constructor and pass it the first_name and last_name data (Done)
+            new_person = Person(first_name=student_first_name, last_name=student_last_name)
             course_name = input("Please enter the name of the course: ")
+            #new_course = Student.course_name(course_name)
+            #new_student = Student(first_name=student_first_name, last_name=student_last_name, course_name=new_course)
             student = {"FirstName": student_first_name,
                             "LastName": student_last_name,
                             "CourseName": course_name}
             student_data.append(student)
             print()
-            print(f"You have registered {student_first_name} {student_last_name} for {course_name}.")
+            #print(new_student)
+            print(f"You have registered {new_person.first_name} {new_person.last_name} for {course_name}.")
         except ValueError as e:
             IO.output_error_messages(message="One of the values was the correct type of data!", error=e)
         except Exception as e:
